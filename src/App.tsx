@@ -36,6 +36,22 @@ function App() {
       ),
     );
   }
+  function updateProductText(
+    productId: string,
+    field: "name" | "sku",
+    value: string,
+  ) {
+    setProducts((currentProducts) =>
+      currentProducts.map((product) =>
+        product.id === productId
+          ? {
+              ...product,
+              [field]: value,
+            }
+          : product,
+      ),
+    );
+  }
   return (
     <main className="min-h-screen bg-slate-100 p-6">
       <div className="mx-auto max-w-7xl">
@@ -48,6 +64,34 @@ function App() {
             Interaktive Übersicht für Lagerbestand und Nachbestellung.
           </p>
         </header>
+
+        <div className="mb-4">
+          <button
+            onClick={() => {
+              setProducts((currentProducts) => [
+                ...currentProducts,
+                {
+                  id: crypto.randomUUID(),
+                  name: "Neues Produkt",
+                  sku: "000",
+
+                  shopStock: 0,
+                  amazonStock: 0,
+                  incomingStock: 0,
+
+                  leadTimeDays: 30,
+                  safetyStockDays: 14,
+
+                  dailyUsageShop: 0,
+                  dailyUsageAmazon: 0,
+                },
+              ]);
+            }}
+            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+          >
+            Produkt hinzufügen
+          </button>
+        </div>
 
         <section className="overflow-x-auto rounded-xl bg-white shadow-sm">
           <table className="min-w-max border-collapse text-sm">
@@ -72,9 +116,31 @@ function App() {
             <tbody>
               {products.map((product) => (
                 <tr key={product.id} className="border-t border-slate-200">
-                  <td className="px-4 py-3">{product.name}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="text"
+                      value={product.name}
+                      onChange={(event) =>
+                        updateProductText(
+                          product.id,
+                          "name",
+                          event.target.value,
+                        )
+                      }
+                      className="w-40 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.sku}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="text"
+                      value={product.sku}
+                      onChange={(event) =>
+                        updateProductText(product.id, "sku", event.target.value)
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
                   <td className="px-4 py-3">
                     <input
