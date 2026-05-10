@@ -6,13 +6,14 @@ import {
   getReorderStatus,
 } from "./utils/calculations";
 import { useEffect, useState } from "react";
+import type { Product } from "./types/product";
 
 function App() {
-  const [products, setProducts] = useState(() => {
+  const [products, setProducts] = useState<Product[]>(() => {
     const savedProducts = localStorage.getItem("products");
 
     if (savedProducts) {
-      return JSON.parse(savedProducts);
+      return JSON.parse(savedProducts) as Product[];
     }
 
     return initialProducts;
