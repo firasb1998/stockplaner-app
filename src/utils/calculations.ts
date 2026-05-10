@@ -1,5 +1,5 @@
 import type { Product } from "../types/product";
-import { addDays } from "date-fns";
+import { addDays, subDays } from "date-fns";
 
 export function getTotalStock(product: Product) {
   return product.shopStock + product.amazonStock;
@@ -24,4 +24,12 @@ export function getEstimatedStockoutDate(product: Product) {
   const daysOfStock = getDaysOfStock(product);
 
   return addDays(new Date(), daysOfStock);
+}
+
+export function getOrderDate(product: Product) {
+  const stockoutDate = getEstimatedStockoutDate(product);
+
+  const totalBufferDays = product.leadTimeDays + product.safetyStockDays;
+
+  return subDays(stockoutDate, totalBufferDays);
 }

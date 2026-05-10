@@ -1,5 +1,9 @@
 import { initialProducts } from "./data/products";
-import { getDaysOfStock, getEstimatedStockoutDate } from "./utils/calculations";
+import {
+  getDaysOfStock,
+  getEstimatedStockoutDate,
+  getOrderDate,
+} from "./utils/calculations";
 
 function App() {
   return (
@@ -30,6 +34,7 @@ function App() {
                 <th className="px-4 py-3">Daily Usage Amazon</th>
                 <th className="px-4 py-3">Days of Stock</th>
                 <th className="px-4 py-3">Stockout Date</th>
+                <th className="px-4 py-3">Order Date</th>
               </tr>
             </thead>
 
@@ -62,6 +67,10 @@ function App() {
                     {getEstimatedStockoutDate(product).toLocaleDateString(
                       "de-DE",
                     )}
+                  </td>
+
+                  <td className="px-4 py-3">
+                    {getOrderDate(product).toLocaleDateString("de-DE")}
                   </td>
                 </tr>
               ))}
