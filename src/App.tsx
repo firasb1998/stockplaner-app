@@ -5,10 +5,21 @@ import {
   getOrderDate,
   getReorderStatus,
 } from "./utils/calculations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState(() => {
+    const savedProducts = localStorage.getItem("products");
+
+    if (savedProducts) {
+      return JSON.parse(savedProducts);
+    }
+
+    return initialProducts;
+  });
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
   function updateProductNumber(
     productId: string,
     field: keyof (typeof products)[number],
