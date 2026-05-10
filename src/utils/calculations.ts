@@ -1,4 +1,5 @@
 import type { Product } from "../types/product";
+import { addDays } from "date-fns";
 
 export function getTotalStock(product: Product) {
   return product.shopStock + product.amazonStock;
@@ -17,4 +18,10 @@ export function getDaysOfStock(product: Product) {
   }
 
   return Math.ceil(totalStock / dailyUsage);
+}
+
+export function getEstimatedStockoutDate(product: Product) {
+  const daysOfStock = getDaysOfStock(product);
+
+  return addDays(new Date(), daysOfStock);
 }
