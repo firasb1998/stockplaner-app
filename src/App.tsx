@@ -110,6 +110,7 @@ function App() {
                 <th className="px-4 py-3">Stockout Date</th>
                 <th className="px-4 py-3">Order Date</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
 
@@ -273,6 +274,21 @@ function App() {
                     >
                       {getReorderStatus(product)}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => {
+                        setProducts((currentProducts) =>
+                          currentProducts.filter(
+                            (currentProduct) =>
+                              currentProduct.id !== product.id,
+                          ),
+                        );
+                      }}
+                      className="rounded-md bg-red-100 px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-200"
+                    >
+                      Löschen
+                    </button>
                   </td>
                 </tr>
               ))}
