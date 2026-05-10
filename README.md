@@ -1,73 +1,152 @@
-# React + TypeScript + Vite
+# Stockplaner 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Eine interaktive Web-App zur Planung von Lagerbestand, Verbrauch und Nachbestellungen.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Deployment URL: > https://stockplaner2026-by-firas-brini.vercel.app/
 
-## React Compiler
+## GitHub Repository
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Repository URL: > https://github.com/firasb1998/stockplaner-app
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Produkte hinzufügen, bearbeiten und löschen
+* Inline-Editing direkt in der Tabelle
+* Berechnung von:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+  * Days of Stock
+  * Estimated Stockout Date
+  * Order Date
+  * Reorder Status
+* Visuelle Status-Indikatoren:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  * OK
+  * SOON
+  * OVERDUE
+* Persistenz über localStorage
+* Responsive Tabellenansicht
+
+---
+
+# Verwendete Technologien
+
+| Technologie  | Grund                                             |
+| ------------ | ------------------------------------------------- |
+| React        | Komponentenbasierte UI und dynamische Darstellung |
+| TypeScript   | Typsicherheit und bessere Wartbarkeit             |
+| Vite         | Schnelles modernes Frontend-Build-Tool            |
+| Tailwind CSS | Schnelle und konsistente UI-Entwicklung           |
+| date-fns     | Einfache und saubere Datumsberechnungen           |
+| localStorage | Einfache clientseitige Persistenz                 |
+| Vercel       | Einfaches Hosting und CI/CD                       |
+
+---
+
+# Berechnungslogik
+
+## Days of Stock
+
+```text
+(Shop Stock + Amazon Stock)
+/
+(Daily Usage Shop + Daily Usage Amazon)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estimated Stockout Date
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+Heute + Days of Stock
 ```
+
+## Order Date
+
+```text
+Estimated Stockout Date
+- Lead Time
+- Safety Stock
+```
+
+## Reorder Status
+
+| Status  | Bedeutung                                        |
+| ------- | ------------------------------------------------ |
+| OK      | Order Date liegt mehr als 14 Tage in der Zukunft |
+| SOON    | Order Date liegt innerhalb der nächsten 14 Tage  |
+| OVERDUE | Order Date liegt in der Vergangenheit            |
+
+---
+
+# Projektstruktur
+
+```text
+src/
+ ├── data/
+ ├── types/
+ ├── utils/
+ ├── App.tsx
+```
+
+## Architektur
+
+* `types/` enthält zentrale TypeScript-Typen
+* `data/` enthält Seed-Daten
+* `utils/` kapselt die gesamte Business-Logik und Berechnungen
+* `App.tsx` enthält die UI und das State-Management
+
+Die Berechnungen wurden bewusst von der UI getrennt, um Lesbarkeit, Wartbarkeit und Wiederverwendbarkeit zu verbessern.
+
+---
+
+# Lokale Entwicklung
+
+## Installation
+
+```bash
+npm install
+```
+
+## Entwicklungsserver starten
+
+```bash
+npm run dev
+```
+
+## Production Build
+
+```bash
+npm run build
+```
+
+---
+
+# Persistenz
+
+Die Daten werden aktuell über `localStorage` im Browser gespeichert.
+
+Dadurch:
+
+* bleiben Änderungen nach einem Reload erhalten
+* ist kein Backend erforderlich
+* kann die App vollständig clientseitig betrieben werden
+
+---
+
+# Mögliche Erweiterungen
+
+* Serverseitige Datenbank
+* Multi-User Support
+* Echtzeit-Synchronisierung
+* Rollen- und Rechteverwaltung
+* Shopify/Amazon API-Import
+* CSV-Export
+* Erweiterte Forecasting-Logik
+
+---
+
+# Autor
+
+Firas Brini
