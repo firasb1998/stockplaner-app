@@ -5,8 +5,26 @@ import {
   getOrderDate,
   getReorderStatus,
 } from "./utils/calculations";
+import { useState } from "react";
 
 function App() {
+  const [products, setProducts] = useState(initialProducts);
+  function updateProductNumber(
+    productId: string,
+    field: keyof (typeof products)[number],
+    value: string,
+  ) {
+    setProducts((currentProducts) =>
+      currentProducts.map((product) =>
+        product.id === productId
+          ? {
+              ...product,
+              [field]: Number(value),
+            }
+          : product,
+      ),
+    );
+  }
   return (
     <main className="min-h-screen bg-slate-100 p-6">
       <div className="mx-auto max-w-7xl">
@@ -20,8 +38,8 @@ function App() {
           </p>
         </header>
 
-        <section className="overflow-hidden rounded-xl bg-white shadow-sm">
-          <table className="min-w-full border-collapse">
+        <section className="overflow-x-auto rounded-xl bg-white shadow-sm">
+          <table className="min-w-max border-collapse text-sm">
             <thead className="bg-slate-100 text-left text-sm text-slate-700">
               <tr>
                 <th className="px-4 py-3">Produkt</th>
@@ -41,25 +59,116 @@ function App() {
             </thead>
 
             <tbody>
-              {initialProducts.map((product) => (
+              {products.map((product) => (
                 <tr key={product.id} className="border-t border-slate-200">
                   <td className="px-4 py-3">{product.name}</td>
 
                   <td className="px-4 py-3">{product.sku}</td>
 
-                  <td className="px-4 py-3">{product.shopStock}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.shopStock}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "shopStock",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.amazonStock}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.amazonStock}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "amazonStock",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.incomingStock}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.incomingStock}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "incomingStock",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.leadTimeDays} Tage</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.leadTimeDays}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "leadTimeDays",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.safetyStockDays} Tage</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.safetyStockDays}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "safetyStockDays",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.dailyUsageShop}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.dailyUsageShop}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "dailyUsageShop",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
-                  <td className="px-4 py-3">{product.dailyUsageAmazon}</td>
+                  <td className="px-4 py-3">
+                    <input
+                      type="number"
+                      value={product.dailyUsageAmazon}
+                      onChange={(event) =>
+                        updateProductNumber(
+                          product.id,
+                          "dailyUsageAmazon",
+                          event.target.value,
+                        )
+                      }
+                      className="w-24 rounded-md border border-slate-300 px-2 py-1"
+                    />
+                  </td>
 
                   <td className="px-4 py-3 font-medium">
                     {getDaysOfStock(product)} Tage
