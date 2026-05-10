@@ -3,6 +3,7 @@ import {
   getDaysOfStock,
   getEstimatedStockoutDate,
   getOrderDate,
+  getReorderStatus,
 } from "./utils/calculations";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <th className="px-4 py-3">Days of Stock</th>
                 <th className="px-4 py-3">Stockout Date</th>
                 <th className="px-4 py-3">Order Date</th>
+                <th className="px-4 py-3">Status</th>
               </tr>
             </thead>
 
@@ -71,6 +73,20 @@ function App() {
 
                   <td className="px-4 py-3">
                     {getOrderDate(product).toLocaleDateString("de-DE")}
+                  </td>
+
+                  <td className="px-4 py-3">
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                        getReorderStatus(product) === "OK"
+                          ? "bg-green-100 text-green-700"
+                          : getReorderStatus(product) === "SOON"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {getReorderStatus(product)}
+                    </span>
                   </td>
                 </tr>
               ))}

@@ -1,5 +1,5 @@
 import type { Product } from "../types/product";
-import { addDays, subDays } from "date-fns";
+import { addDays, subDays, differenceInDays } from "date-fns";
 
 export function getTotalStock(product: Product) {
   return product.shopStock + product.amazonStock;
@@ -32,4 +32,20 @@ export function getOrderDate(product: Product) {
   const totalBufferDays = product.leadTimeDays + product.safetyStockDays;
 
   return subDays(stockoutDate, totalBufferDays);
+}
+
+export function getReorderStatus(product: Product) {
+  const orderDate = getOrderDate(product);
+
+  const daysUntilOrder = differenceInDays(orderDate, new Date());
+
+  if (daysUntilOrder < 0) {
+    return "OVERDUE";
+  }
+
+  if (daysUntilOrder <= 14) {
+    return "SOON";
+  }
+
+  return "OK";
 }
