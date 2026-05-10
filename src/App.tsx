@@ -1,4 +1,5 @@
 import { initialProducts } from "./data/products";
+import { getDaysOfStock } from "./utils/calculations";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 <th className="px-4 py-3">Safety Stock</th>
                 <th className="px-4 py-3">Daily Usage Shop</th>
                 <th className="px-4 py-3">Daily Usage Amazon</th>
+                <th className="px-4 py-3">Days of Stock</th>
               </tr>
             </thead>
 
@@ -50,6 +52,10 @@ function App() {
                   <td className="px-4 py-3">{product.dailyUsageShop}</td>
 
                   <td className="px-4 py-3">{product.dailyUsageAmazon}</td>
+
+                  <td className="px-4 py-3 font-medium">
+                    {getDaysOfStock(product)} Tage
+                  </td>
                 </tr>
               ))}
             </tbody>

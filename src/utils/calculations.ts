@@ -16,5 +16,5 @@ export function getDaysOfStock(product: Product) {
     return 0;
   }
 
-  return totalStock / dailyUsage;
+  return Math.ceil(totalStock / dailyUsage);
 }
